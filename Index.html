@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pac-Man</title>
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(21, 25px);
+        }
+
+        .cell {
+            width: 25px;
+            height: 25px;
+            background-color: #000;
+        }
+
+        .pacman {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #FF0;
+            position: absolute;
+            transition: 0.2s;
+        }
+
+        .pacman.open {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .ghost {
+            width: 25px;
+            height: 25px;
+            background-color: #F00;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-board"></div>
+
+    <script>
+        // Game board dimensions
+        const numRows = 21;
+        const numCols = 21;
+
+        // Create game board
+        const gameBoard = document.getElementById('game-board');
+        for (let row = 0; row < numRows; row++) {
+            for (let col = 0; col < numCols; col++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                gameBoard.appendChild(cell);
+            }
+        }
+
+        // Pac-Man initial position
+        let pacManPosition = { x: 10, y: 10 };
+        const pacMan = document.createElement('div');
+        pacMan.className = 'pacman';
+        gameBoard.appendChild(pacMan);
+
+        // Ghost initial position
+        let ghostPosition = { x: 5, y: 5 };
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost';
+        gameBoard.appendChild(ghost);
+
+        // Move Pac-Man
+        function movePacMan(direction) {
+            let newPosition = { ...pacManPosition };
+
+            if (direction === 'up') {
+                newPosition.y--;
+            } else if (direction === 'down') {
+                newPosition.y++;
+            } else if (direction === 'left') {
+                newPosition.x--;
+            } else if (direction === 'right') {
+                newPosition.x++;
+            }
+
+            if (newPosition.x >= 0 && newPosition.x < numCols && newPosition.y >= 0 && newPosition.y < numRows) {
+                pacManPosition = newPosition;
+                pacMan.style.transform = `translate(${pacManPosition.x * 25}px, ${pacManPosition.y * 25}px)`;
+
+                // Check for collision with ghost
+                if (pacManPosition.x === ghostPosition.x && pacManPosition.y === ghostPosition.y) {
+                    alert('Game over!');
+                }
+            }
+        }
+
+        // Event listener for arrow key presses
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (key === 'ArrowUp') {
+                movePacMan('up');
+            } else if (key === 'ArrowDown') {
+                movePacMan('down');
+            } else if (key === 'ArrowLeft') {
+                movePacMan('left');
+            } else if (key === 'ArrowRight') {
+                movePacMan('right');
+            }
+        });
+
+        // Move Ghost randomly
+        setInterval(() => {
+            const directions = ['up', 'down', 'left', 'right'];
+            const randomIndex = Math.floor
+        if (randomDirection === 'up') {
+            newGhostPosition.y--;
+        } else if (randomDirection === 'down') {
+            newGhostPosition.y++;
+        } else if (randomDirection === 'left') {
+            newGhostPosition.x--;
+        } else if (randomDirection === 'right') {
+            newGhostPosition.x++;
+        }
+
+        if (newGhostPosition.x >= 0 && newGhostPosition.x < numCols && newGhostPosition.y >= 0 && newGhostPosition.y < numRows) {
+            ghostPosition = newGhostPosition;
+            ghost.style.transform = `translate(${ghostPosition.x * 25}px, ${ghostPosition.y * 25}px)`;
+        }
+    }, 1000);
+</script>
+</body>
+</html>
